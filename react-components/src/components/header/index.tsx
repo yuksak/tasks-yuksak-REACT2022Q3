@@ -9,12 +9,19 @@ class Header extends Component {
         <nav className={classes.header__nav}>
           <ul>
             <li>
-              <NavLink to="/" className={({ isActive }) => (isActive ? 'red' : '')}>
+              <NavLink
+                to="/"
+                className={({ isActive }) => (isActive ? classes.active : undefined)}
+                end
+              >
                 Home
               </NavLink>
             </li>
             <li>
-              <NavLink to="/about-us" className={({ isActive }) => (isActive ? 'red' : '')}>
+              <NavLink
+                to="/about-us"
+                className={({ isActive }) => (isActive ? classes.active : undefined)}
+              >
                 About Us
               </NavLink>
             </li>

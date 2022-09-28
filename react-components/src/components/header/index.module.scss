@@ -24,12 +24,11 @@
     & a {
       text-decoration: none;
       color: white;
-
-      &:hover,
-      :active,
-      .active {
-        text-decoration: underline;
-      }
+      transition: ease 0.1s;
     }
   }
+}
+.active {
+  border-bottom: 3px solid white;
+  border-radius: 5px;
 }
