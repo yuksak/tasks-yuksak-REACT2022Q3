@@ -1,23 +1,48 @@
 .search {
   margin: 0 0 30px 0;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   text-align: center;
 
   &__input {
-    height: 40px;
+    height: 100%;
     max-width: 215px;
     padding: 5px 10px;
     font-size: 1rem;
     border: 2px solid #1957bf;
+    border-right: none;
     border-radius: 0;
 
     &::placeholder {
       color: #ccc;
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
 
     &:focus {
       border-color: #ccc;
       outline: none;
+    }
+  }
+
+  &__button {
+    border: 0;
+    height: 100%;
+    font-size: 1.2rem;
+    padding: 0 1.5rem;
+    background-color: #1957bf;
+    color: white;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    & svg {
+      transition: all 0.3s;
+    }
+
+    &:hover svg {
+      transform: translate(5px, 0);
     }
   }
 }
