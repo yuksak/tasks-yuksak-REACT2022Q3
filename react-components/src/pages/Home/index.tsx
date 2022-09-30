@@ -6,7 +6,7 @@ import classes from './index.module.scss';
 class Home extends Component {
   render() {
     return (
-      <div className={classes.home}>
+      <div className={classes.home} data-testid="home">
         <SearchBar />
         <Cards />
       </div>

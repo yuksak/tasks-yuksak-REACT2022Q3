@@ -1,4 +1,4 @@
-import { ItemsType } from '../models/main';
+import { ItemsType } from '../models';
 
 export const mockItems: ItemsType = [
   {

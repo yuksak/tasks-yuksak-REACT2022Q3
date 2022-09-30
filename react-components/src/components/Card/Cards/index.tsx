@@ -8,7 +8,7 @@ import classes from './index.module.scss';
 class Cards extends Component {
   render() {
     return (
-      <div className={classes.cards}>
+      <div className={classes.cards} data-testid="cards">
         {mockItems.map((item) => (
           <Card key={item.id} {...item} />
         ))}

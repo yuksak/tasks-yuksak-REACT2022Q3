@@ -4,7 +4,7 @@ import classes from './index.module.scss';
 class AboutUs extends Component {
   render() {
     return (
-      <div className={classes.about}>
+      <div className={classes.about} data-testid="about-us">
         <h1>About Us</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt

@@ -2,25 +2,25 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { FiHeart, FiEye, FiClock } from 'react-icons/fi';
-import { ItemInterface } from '../../../models/main';
+import { ItemInterface } from '../../../models';
 
 import classes from './index.module.scss';
 
 class Card extends Component<ItemInterface> {
   constructor(props: ItemInterface) {
     super(props);
-    // this.state = { value: '' };
   }
   render() {
     return (
-      <div className={classes.card}>
-        <div className={classes.card__image}>
+      <div className={classes.card} data-testid="card">
+        <div className={classes.card__image} data-testid="card-image">
           <img
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             src={this.props.image}
+            alt="image"
           />
         </div>
-        <div className={classes.card__body}>
+        <div className={classes.card__body} data-testid="card-body">
           <Link to="#" className={classes.card__title}>
             {this.props.title}
           </Link>
@@ -29,7 +29,7 @@ class Card extends Component<ItemInterface> {
           </p>
           <p className={classes.card__category}>{this.props.category}</p>
         </div>
-        <div className={classes.card__stats}>
+        <div className={classes.card__stats} data-testid="card-stats">
           <span className={classes.card__likes}>
             <FiHeart /> {this.props.likes}
           </span>
