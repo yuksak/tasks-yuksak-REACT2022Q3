@@ -12,7 +12,6 @@
     padding: 5px 10px;
     font-size: 1rem;
     border: 2px solid #1957bf;
-    border-right: none;
     border-radius: 0;
 
     &::placeholder {
@@ -42,7 +41,7 @@
     }
 
     &:hover svg {
-      transform: translate(5px, 0);
+      transform: translate(-5px, 0);
     }
   }
 }

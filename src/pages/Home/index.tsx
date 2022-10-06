@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import SearchBar from 'components/SearchBar';
-import Cards from 'components/Card/Cards';
+
+import { SearchBar, Cards } from 'components';
 import classes from './index.module.scss';
+
+import { mockItems } from 'mock';
 
 class Home extends Component {
   render() {
     return (
       <div className={classes.home} data-testid="home">
         <SearchBar />
-        <Cards />
+        <Cards cardData={mockItems} />
       </div>
     );
   }

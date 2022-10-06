@@ -32,6 +32,7 @@
     font-weight: 600;
     color: #1957bf;
     flex-grow: 1;
+    font-size: 1rem;
 
     &:hover {
       text-decoration: underline;
@@ -39,6 +40,23 @@
   }
 
   &__author {
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    padding: 0.5rem 0;
+
+    flex-grow: 0;
+
+    & a {
+      text-decoration: none;
+      color: #1957bf;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__gender {
     margin: 0;
     border-bottom: 1px solid #ccc;
     padding: 0.5rem 0;

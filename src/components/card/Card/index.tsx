@@ -22,12 +22,11 @@ class Card extends Component<ItemInterface> {
         </div>
         <div className={classes.card__body} data-testid="card-body">
           <Link to="#" className={classes.card__title}>
-            {this.props.title}
+            {this.props.fullName}
           </Link>
-          <p className={classes.card__author}>
-            by <Link to="#">{this.props.author}</Link>
-          </p>
-          <p className={classes.card__category}>{this.props.category}</p>
+          <p className={classes.card__author}>Birthday: {this.props.birthday}</p>
+          <p className={classes.card__gender}>Gender: {this.props.gender}</p>
+          <p className={classes.card__category}>Country: {this.props.country}</p>
         </div>
         <div className={classes.card__stats} data-testid="card-stats">
           <span className={classes.card__likes}>
@@ -37,7 +36,7 @@ class Card extends Component<ItemInterface> {
             <FiEye /> {this.props.views}
           </span>
           <span>
-            <FiClock /> {this.props.date}
+            <FiClock /> {this.props.birthday}
           </span>
         </div>
       </div>

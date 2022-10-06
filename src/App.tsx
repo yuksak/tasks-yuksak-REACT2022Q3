@@ -2,10 +2,8 @@ import React, { Component, Fragment } from 'react';
 
 import { Routes, Route } from 'react-router';
 
-import NotFound from 'pages/NotFound';
-import Home from 'pages/Home';
-import AboutUs from 'pages/AboutUs';
-import Header from 'components/Header';
+import { NotFound, Home, AboutUs } from './pages';
+import { Header } from 'components';
 
 class App extends Component {
   render() {
