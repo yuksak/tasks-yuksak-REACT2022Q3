@@ -12,3 +12,20 @@ export interface ItemInterface {
 export type ItemsType = {
   cardData?: ItemInterface[];
 };
+
+export interface FormState {
+  errors: {
+    fullNameInput: string;
+    birthdayInput: string;
+    countryInput: string;
+    genderInput: string;
+    imageInput: string;
+    confirmationInput: string;
+  };
+  buttonDisabled: boolean;
+  cardSaved: boolean;
+}
+
+export type FormProps = {
+  addCard?: (cardData: ItemInterface) => void;
+};

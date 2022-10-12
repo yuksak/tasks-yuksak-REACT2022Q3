@@ -1,5 +1,15 @@
 import { ItemInterface } from '../models';
 
+export const countries: string[] = [
+  'Select',
+  'Uzbekistan',
+  'Georgia',
+  'Azerbaijan',
+  'Turkey',
+  'Kazakhstan',
+  'Tajikistan',
+];
+
 export const mockItems: ItemInterface[] = [
   {
     id: 1,

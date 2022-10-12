@@ -17,5 +17,8 @@ describe('Header Component', () => {
 
     const aboutElement = screen.getByTestId('About-Us');
     expect(aboutElement).toBeInTheDocument();
+
+    const formsElement = screen.getByTestId('Forms');
+    expect(formsElement).toBeInTheDocument();
   });
 });

@@ -24,6 +24,11 @@ class Header extends Component {
                 About Us
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/forms" className={classIsActive} data-testid="Forms">
+                Forms
+              </NavLink>
+            </li>
           </ul>
         </nav>
       </header>
