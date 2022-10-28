@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import classes from './index.module.scss';
+import styles from './index.module.scss';
 
 interface isActive {
   isActive: boolean;
 }
 
-const classIsActive = ({ isActive }: isActive) => (isActive ? classes.active : undefined);
+const classIsActive = ({ isActive }: isActive) => (isActive ? styles.active : undefined);
 
 class Header extends Component {
   render() {
     return (
-      <header className={classes.header}>
-        <nav className={classes.header__nav}>
+      <header className={styles.header}>
+        <nav className={styles.nav}>
           <ul>
             <li>
               <NavLink to="/" className={classIsActive} data-testid="Home" end>

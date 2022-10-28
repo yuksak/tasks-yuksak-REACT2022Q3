@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FiHeart, FiEye, FiClock } from 'react-icons/fi';
 import { ItemInterface } from '../../../models';
 
-import classes from './index.module.scss';
+import styles from './index.module.scss';
 
 class Card extends Component<ItemInterface> {
   constructor(props: ItemInterface) {
@@ -12,24 +12,20 @@ class Card extends Component<ItemInterface> {
   }
   render() {
     return (
-      <div className={classes.card} data-testid="card">
-        <div className={classes.card__image} data-testid="card-image">
-          <img
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            src={this.props.image}
-            alt="image"
-          />
+      <div className={styles.card} data-testid="card">
+        <div className={styles.imageBox} data-testid="card-image">
+          <img className={styles.image} src={this.props.image} alt="image" />
         </div>
-        <div className={classes.card__body} data-testid="card-body">
-          <Link to="#" className={classes.card__title}>
+        <div className={styles.body} data-testid="card-body">
+          <Link to="#" className={styles.title}>
             {this.props.fullName}
           </Link>
-          <p className={classes.card__author}>Birthday: {this.props.birthday}</p>
-          <p className={classes.card__gender}>Gender: {this.props.gender}</p>
-          <p className={classes.card__category}>Country: {this.props.country}</p>
+          <p className={styles.birthday}>Birthday: {this.props.birthday}</p>
+          <p className={styles.gender}>Gender: {this.props.gender}</p>
+          <p className={styles.category}>Country: {this.props.country}</p>
         </div>
-        <div className={classes.card__stats} data-testid="card-stats">
-          <span className={classes.card__likes}>
+        <div className={styles.stats} data-testid="card-stats">
+          <span>
             <FiHeart /> {this.props.likes}
           </span>
           <span>
