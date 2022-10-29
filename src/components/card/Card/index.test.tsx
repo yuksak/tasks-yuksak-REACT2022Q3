@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import Card from './index';
@@ -30,7 +30,26 @@ describe('Card Component', () => {
   test('renders card-stats', () => {
     render(<Card />, { wrapper: MemoryRouter });
 
+    fireEvent.click(screen.getByTestId('card'));
     const cardStats = screen.getByTestId('card-stats');
     expect(cardStats).toBeInTheDocument();
+  });
+
+  test('check opener', () => {
+    render(<Card />, { wrapper: MemoryRouter });
+
+    const card = screen.getByTestId('card');
+    fireEvent.click(card);
+    expect(card).toBeTruthy();
+  });
+
+  test('check closer', () => {
+    render(<Card />, { wrapper: MemoryRouter });
+
+    fireEvent.click(screen.getByTestId('card'));
+
+    const closer = screen.getByTestId('card-closer');
+    fireEvent.click(closer);
+    expect(closer).toBeTruthy();
   });
 });

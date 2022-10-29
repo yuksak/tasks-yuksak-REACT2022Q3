@@ -18,18 +18,18 @@ class Card extends Component<ItemInterface, CardState> {
     };
   }
 
-  detailedCardCloser = () => {
+  detailedCardOpener = () => {
     this.setState({ detailedCard: true });
   };
 
-  detailedCardOpener = () => {
+  detailedCardCloser = () => {
     this.setState({ detailedCard: false });
   };
 
   render() {
     return (
       <>
-        <div className={styles.card} data-testid="card" onClick={this.detailedCardCloser}>
+        <div className={styles.card} data-testid="card" onClick={this.detailedCardOpener}>
           <div className={styles.imageBox} data-testid="card-image">
             <img className={styles.image} src={this.props.image} alt="image" />
           </div>
@@ -41,11 +41,19 @@ class Card extends Component<ItemInterface, CardState> {
         </div>
 
         {this.state.detailedCard ? (
-          <div className={styles.modal}>
-            <div className={`${styles.card} ${styles.detailedCard}`} data-testid="detailed-card">
+          <div className={styles.modal} onClick={this.detailedCardCloser}>
+            <div
+              className={`${styles.card} ${styles.detailedCard}`}
+              data-testid="detailed-card"
+              onClick={(e) => e.stopPropagation()}
+            >
               <div className={styles.imageBox} data-testid="card-image">
                 <img className={styles.image} src={this.props.image} alt="image" />
-                <button className={styles.modalCloseButton} onClick={this.detailedCardOpener}>
+                <button
+                  className={styles.modalCloseButton}
+                  onClick={this.detailedCardCloser}
+                  data-testid="card-closer"
+                >
                   <FiX />
                 </button>
               </div>
@@ -53,9 +61,9 @@ class Card extends Component<ItemInterface, CardState> {
                 <Link to="#" className={styles.title}>
                   {this.props.fullName}
                 </Link>
-                <p className={styles.birthday}>Birthday: {this.props.birthday}</p>
+                <p className={styles.birthday}>Birthday: {this.props.birthday?.slice(0, 10)}</p>
                 <p className={styles.gender}>Gender: {this.props.gender}</p>
-                <p className={styles.category}>Country: {this.props.country}</p>
+                <p className={styles.origin}>Origin: {this.props.country}</p>
               </div>
               <div className={styles.stats} data-testid="card-stats">
                 <span>
@@ -65,7 +73,7 @@ class Card extends Component<ItemInterface, CardState> {
                   <FiEye /> {this.props.views}
                 </span>
                 <span>
-                  <FiClock /> {this.props.birthday}
+                  <FiClock /> {this.props.created?.slice(0, 10)}
                 </span>
               </div>
             </div>

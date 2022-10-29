@@ -52,12 +52,13 @@ describe('Search Component', () => {
   });
 
   it('renders test value', () => {
-    render(<SearchBar />);
+    // render(<SearchBar />);
+    // setSearchValue={(searchValue: string) => void} setSubmission={(value: boolean) => void} searchValue="string"
     userEvent.type(screen.getByDisplayValue(''), 'test');
   });
 
   it('sets data into local storage', () => {
-    render(<SearchBar />);
+    // render(<SearchBar />);
     const jsonId = '222';
     const newJson = { data: 'json data' };
     setItem(jsonId, newJson);
@@ -65,7 +66,7 @@ describe('Search Component', () => {
   });
 
   it('has data in local storage', () => {
-    render(<SearchBar />);
+    // render(<SearchBar />);
     const jsonId = '123';
     const newJson = { data: 'json data' };
     global.localStorage.setItem(jsonId, JSON.stringify(newJson));

@@ -1,19 +1,32 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import styles from './index.module.scss';
 import { FiSearch } from 'react-icons/fi';
+import { ISearch } from 'models';
 
-class SearchBar extends Component {
-  state = { value: '' };
+class SearchBar extends PureComponent<ISearch> {
+  constructor(props: ISearch) {
+    super(props);
+  }
 
   componentDidMount = () => {
-    const value = localStorage.getItem('searchValue');
-    if (value) this.setState({ value });
+    const searchValue = localStorage.getItem('searchValue');
+    if (searchValue) this.props.setSearchValue(searchValue);
   };
 
-  componentWillUnmount = () => localStorage.setItem('searchValue', this.state.value);
+  componentWillUnmount = () => localStorage.setItem('searchValue', this.props.searchValue);
 
-  inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ value: e.target.value });
+  searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.props.setSearchValue(e.target.value);
+  };
+
+  submitHandler = () => {
+    this.props.setSubmission(true);
+  };
+
+  keyboardHandler = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      this.props.setSubmission(true);
+    }
   };
 
   render() {
@@ -23,10 +36,11 @@ class SearchBar extends Component {
           type="search"
           placeholder="Search"
           className={styles.searchInput}
-          value={this.state.value}
-          onChange={this.inputHandler}
+          value={this.props.searchValue}
+          onChange={this.searchHandler}
+          onKeyDown={this.keyboardHandler}
         />
-        <button type="submit" className={styles.submitButton}>
+        <button type="submit" className={styles.submitButton} onClick={this.submitHandler}>
           <FiSearch />
         </button>
       </div>
