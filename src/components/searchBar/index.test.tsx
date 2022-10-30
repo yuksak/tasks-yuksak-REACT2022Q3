@@ -51,13 +51,7 @@ describe('Search Component', () => {
   const setSearchValue = jest.fn();
 
   const setup = () => {
-    const utils = render(
-      <SearchBar
-        searchValue="Morty Smith"
-        setSubmission={setSubmission}
-        setSearchValue={setSearchValue}
-      />
-    );
+    const utils = render(<SearchBar searchValue="Morty Smith" setSearchValue={setSearchValue} />);
 
     const input = utils.getByTestId('search-input') as HTMLInputElement;
     return {
@@ -71,9 +65,7 @@ describe('Search Component', () => {
   });
 
   it('renders test value', () => {
-    render(
-      <SearchBar searchValue="test" setSubmission={setSubmission} setSearchValue={setSearchValue} />
-    );
+    render(<SearchBar searchValue="test" setSearchValue={setSearchValue} />);
 
     const input = screen.getByTestId('search-input') as HTMLInputElement;
     userEvent.type(input, 'test');
@@ -81,13 +73,7 @@ describe('Search Component', () => {
   });
 
   it('sets data into local storage', () => {
-    render(
-      <SearchBar
-        searchValue="string"
-        setSubmission={setSubmission}
-        setSearchValue={setSearchValue}
-      />
-    );
+    render(<SearchBar searchValue="string" setSearchValue={setSearchValue} />);
     const jsonId = '222';
     const newJson = { data: 'json data' };
     setItem(jsonId, newJson);
@@ -95,13 +81,7 @@ describe('Search Component', () => {
   });
 
   it('has data in local storage', () => {
-    render(
-      <SearchBar
-        searchValue="Morty Smith"
-        setSubmission={setSubmission}
-        setSearchValue={setSearchValue}
-      />
-    );
+    render(<SearchBar searchValue="Morty Smith" setSearchValue={setSearchValue} />);
     const jsonId = '123';
     const newJson = { data: 'json data' };
     global.localStorage.setItem(jsonId, JSON.stringify(newJson));
