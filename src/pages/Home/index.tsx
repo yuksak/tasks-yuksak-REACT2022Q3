@@ -1,31 +1,25 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 
 import { SearchBar, Cards, Loader } from 'components';
 import styles from './index.module.scss';
 
-import { IHomeState, IResult } from 'models';
 import { getAllData } from 'api';
+import { ICard, IResult } from 'models/cards';
 
-class Home extends Component<Record<never, never>, IHomeState> {
-  constructor(props: never) {
-    super(props);
-    this.state = {
-      cardData: [],
-      searchValue: '',
-      errorMessage: '',
-      isLoading: false,
-      isSubmitted: false,
-    };
-  }
+const Home = () => {
+  const [cards, setCards] = useState<ICard[]>([]);
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  fetchCards = async () => {
-    this.setState({ isLoading: true });
-    const response = await getAllData(this.state.searchValue);
+  const fetchData = async () => {
+    setIsLoading(true);
+    const response = await getAllData(searchValue);
 
     if (response.error) {
-      this.setState({ errorMessage: 'No exact matches found.' });
-      this.setState({ cardData: [] });
-      this.setState({ isLoading: false });
+      setErrorMessage('No exact matches found.');
+      setCards([]);
+      setIsLoading(false);
     }
 
     if (response.results) {
@@ -43,47 +37,27 @@ class Home extends Component<Record<never, never>, IHomeState> {
         };
       });
 
-      this.setState({ errorMessage: '' });
-      this.setState({ cardData: formattedResults });
-      this.setState({ isLoading: false });
+      setErrorMessage('');
+      setCards(formattedResults);
     }
-    // this.setState({ isLoading: false });
-    this.setState({ isSubmitted: false });
+    setIsLoading(false);
   };
 
-  componentDidUpdate = (prevProps: never, prevState: IHomeState) => {
-    if (this.state.isSubmitted !== prevState.isSubmitted) {
-      this.fetchCards();
-    }
-  };
+  useEffect(() => {
+    fetchData();
+  }, [searchValue]);
 
-  componentDidMount = () => {
-    this.fetchCards();
-  };
+  return (
+    <div className={styles.home} data-testid="home">
+      <SearchBar setSearchValue={setSearchValue} searchValue={searchValue} />
 
-  setSearchValue = (searchValue: string) => {
-    this.setState({ searchValue });
-  };
-
-  setSubmission = (value: boolean) => this.setState({ isSubmitted: value });
-
-  render() {
-    return (
-      <div className={styles.home} data-testid="home">
-        <SearchBar
-          setSubmission={this.setSubmission}
-          setSearchValue={this.setSearchValue}
-          searchValue={this.state.searchValue}
-        />
-
-        {this.state.cardData.length !== 0 && !this.state.isLoading ? (
-          <Cards cardData={this.state.cardData} />
-        ) : (
-          <Loader error={this.state.errorMessage} isLoading={this.state.isLoading} />
-        )}
-      </div>
-    );
-  }
-}
+      {cards.length !== 0 && !isLoading ? (
+        <Cards cardData={cards} />
+      ) : (
+        <Loader error={errorMessage} isLoading={isLoading} />
+      )}
+    </div>
+  );
+};
 
 export default Home;
