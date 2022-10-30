@@ -1,31 +1,22 @@
-import React, { Component } from 'react';
-import { FiLoader, FiAlertTriangle } from 'react-icons/fi';
+import React, { FC } from 'react';
 
 import styles from './index.module.scss';
+import { FiLoader, FiAlertTriangle } from 'react-icons/fi';
 
-interface IError {
-  error: string;
-  isLoading: boolean;
-}
+import { ILoaderProps } from 'models/loader';
 
-class Loader extends Component<IError> {
-  constructor(props: IError) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div className={styles.loader} data-testid="loader">
-        {this.props.error && !this.props.isLoading ? (
-          <p className={styles.error}>
-            <FiAlertTriangle /> {this.props.error}
-          </p>
-        ) : (
-          <FiLoader className={styles.loading} />
-        )}
-      </div>
-    );
-  }
-}
+const Loader: FC<ILoaderProps> = (props) => {
+  return (
+    <div className={styles.loader} data-testid="loader">
+      {props.error && !props.isLoading ? (
+        <p className={styles.error}>
+          <FiAlertTriangle /> {props.error}
+        </p>
+      ) : (
+        <FiLoader className={styles.loading} />
+      )}
+    </div>
+  );
+};
 
 export default Loader;
