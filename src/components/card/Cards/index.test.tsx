@@ -8,7 +8,7 @@ import { mockItems } from '../../../mock/index';
 
 describe('Cards Component', () => {
   test('renders images alt', () => {
-    render(<Cards cardData={mockItems} />, { wrapper: MemoryRouter });
+    render(<Cards cards={mockItems} />, { wrapper: MemoryRouter });
 
     const cards = screen.getByTestId('cards');
     expect(cards).toBeInTheDocument();
