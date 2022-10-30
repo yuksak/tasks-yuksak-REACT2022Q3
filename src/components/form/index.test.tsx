@@ -3,6 +3,7 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import Form from './index';
 import userEvent from '@testing-library/user-event';
+import { ItemInterface } from 'models';
 
 describe('Form Page', () => {
   test('renders Form info', () => {
@@ -58,4 +59,16 @@ describe('Form Page', () => {
     const element = screen.getByTestId('submit-button');
     expect(element).toBeDisabled();
   });
+
+  const addCard = (card: ItemInterface) => {
+    const newCard = {
+      ...card,
+      likes: 0,
+      views: 1,
+    };
+    const setState = (prevState: { cards: object[] }) => {
+      const updatedCards = prevState.cards.concat(newCard);
+      return { cards: [...updatedCards] };
+    };
+  };
 });

@@ -15,7 +15,7 @@ class Loader extends Component<IError> {
 
   render() {
     return (
-      <div className={styles.loader}>
+      <div className={styles.loader} data-testid="loader">
         {this.props.error && !this.props.isLoading ? (
           <p className={styles.error}>
             <FiAlertTriangle /> {this.props.error}

@@ -31,7 +31,7 @@ class SearchBar extends PureComponent<ISearch> {
 
   render() {
     return (
-      <div className={styles.search}>
+      <div className={styles.search} data-testid="search-bar">
         <input
           type="search"
           placeholder="Search"
@@ -39,8 +39,14 @@ class SearchBar extends PureComponent<ISearch> {
           value={this.props.searchValue}
           onChange={this.searchHandler}
           onKeyDown={this.keyboardHandler}
+          data-testid="search-input"
         />
-        <button type="submit" className={styles.submitButton} onClick={this.submitHandler}>
+        <button
+          type="submit"
+          className={styles.submitButton}
+          onClick={this.submitHandler}
+          data-testid="search-button"
+        >
           <FiSearch />
         </button>
       </div>

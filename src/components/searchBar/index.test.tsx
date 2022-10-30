@@ -1,7 +1,7 @@
 import React from 'react';
 
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 
 import SearchBar from './index';
 
@@ -47,18 +47,47 @@ function setItem(jsonId: string, newJson: { data: string }) {
 }
 
 describe('Search Component', () => {
+  const setSubmission = jest.fn();
+  const setSearchValue = jest.fn();
+
+  const setup = () => {
+    const utils = render(
+      <SearchBar
+        searchValue="Morty Smith"
+        setSubmission={setSubmission}
+        setSearchValue={setSearchValue}
+      />
+    );
+
+    const input = utils.getByTestId('search-input') as HTMLInputElement;
+    return {
+      input,
+      ...utils,
+    };
+  };
+
   afterEach(() => {
     global.localStorage.clear();
   });
 
   it('renders test value', () => {
-    // render(<SearchBar />);
-    // setSearchValue={(searchValue: string) => void} setSubmission={(value: boolean) => void} searchValue="string"
-    userEvent.type(screen.getByDisplayValue(''), 'test');
+    render(
+      <SearchBar searchValue="test" setSubmission={setSubmission} setSearchValue={setSearchValue} />
+    );
+
+    const input = screen.getByTestId('search-input') as HTMLInputElement;
+    userEvent.type(input, 'test');
+    expect(input.value).toEqual('test');
   });
 
   it('sets data into local storage', () => {
-    // render(<SearchBar />);
+    render(
+      <SearchBar
+        searchValue="string"
+        setSubmission={setSubmission}
+        setSearchValue={setSearchValue}
+      />
+    );
     const jsonId = '222';
     const newJson = { data: 'json data' };
     setItem(jsonId, newJson);
@@ -66,10 +95,30 @@ describe('Search Component', () => {
   });
 
   it('has data in local storage', () => {
-    // render(<SearchBar />);
+    render(
+      <SearchBar
+        searchValue="Morty Smith"
+        setSubmission={setSubmission}
+        setSearchValue={setSearchValue}
+      />
+    );
     const jsonId = '123';
     const newJson = { data: 'json data' };
     global.localStorage.setItem(jsonId, JSON.stringify(newJson));
     setItem(jsonId, newJson);
+  });
+
+  test('checks onChange and onKeyDown of input', () => {
+    const { input } = setup();
+
+    fireEvent.change(input, { target: { value: 'Morty Smith' } });
+    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', charCode: 13 });
+
+    const keyboardHandler = (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        setSubmission(true);
+        expect(input.value).toBe('Morty Smith');
+      }
+    };
   });
 });

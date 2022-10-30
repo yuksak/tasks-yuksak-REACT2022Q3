@@ -52,4 +52,31 @@ describe('Card Component', () => {
     fireEvent.click(closer);
     expect(closer).toBeTruthy();
   });
+
+  test('check modal and detailed card', () => {
+    render(<Card />, { wrapper: MemoryRouter });
+
+    fireEvent.click(screen.getByTestId('card'));
+
+    const modal = screen.getByTestId('modal');
+    expect(modal).toBeInTheDocument();
+
+    const detailedCard = screen.getByTestId('detailed-card');
+    expect(detailedCard).toBeInTheDocument();
+  });
+
+  test('check modal closer button', () => {
+    render(<Card />, { wrapper: MemoryRouter });
+
+    fireEvent.click(screen.getByTestId('card'));
+
+    const modal = screen.getByTestId('modal');
+    expect(modal).toBeInTheDocument();
+
+    const button = screen.getByTestId('card-closer');
+    fireEvent.click(button);
+
+    expect(button).not.toBeInTheDocument();
+    expect(modal).not.toBeInTheDocument();
+  });
 });

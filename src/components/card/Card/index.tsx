@@ -41,7 +41,7 @@ class Card extends Component<ItemInterface, CardState> {
         </div>
 
         {this.state.detailedCard ? (
-          <div className={styles.modal} onClick={this.detailedCardCloser}>
+          <div className={styles.modal} onClick={this.detailedCardCloser} data-testid="modal">
             <div
               className={`${styles.card} ${styles.detailedCard}`}
               data-testid="detailed-card"
