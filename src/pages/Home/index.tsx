@@ -52,7 +52,7 @@ const Home = () => {
       <SearchBar setSearchValue={setSearchValue} searchValue={searchValue} />
 
       {cards.length !== 0 && !isLoading ? (
-        <Cards cardData={cards} />
+        <Cards cards={cards} />
       ) : (
         <Loader error={errorMessage} isLoading={isLoading} />
       )}
