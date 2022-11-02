@@ -193,7 +193,7 @@ const Form: FC<TFormProps> = (props) => {
 
           {isDirty && !isSubmitSuccessful ? (
             <input
-              type="button"
+              type="reset"
               value="Clear"
               className={styles.clearButton}
               data-testid="clearButton"
