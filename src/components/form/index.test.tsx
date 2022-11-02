@@ -1,74 +1,99 @@
 import React from 'react';
 
-import { fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import Form from './index';
 import userEvent from '@testing-library/user-event';
-import { ItemInterface } from 'models';
+import { act } from 'react-dom/test-utils';
+
+const mockCard = jest.fn((props) => {
+  const { fullName, birthday, country, gender, image } = props;
+  return Promise.resolve({ fullName, birthday, country, gender, image });
+});
 
 describe('Form Page', () => {
-  test('renders Form info', () => {
-    render(<Form />);
+  afterEach(cleanup);
+
+  it('renders form component', () => {
+    render(<Form addCard={mockCard} />);
 
     const element = screen.getByTestId('form');
     expect(element).toBeInTheDocument();
   });
 
-  test('user must enter fullName', () => {
-    render(<Form />);
+  it('should render the basic fields', () => {
+    render(<Form addCard={mockCard} />);
 
-    fireEvent.click(screen.getByTestId('confirmationInput'));
-    fireEvent.click(screen.getByTestId('submit-button'));
-    expect(screen.getByText(/Please enter your full name!/i)).toBeInTheDocument();
+    expect(screen.getByTestId('fullNameInput')).toBeInTheDocument();
+    expect(screen.getByTestId('birthdayInput')).toBeInTheDocument();
+    expect(screen.getByTestId('countryInput')).toBeInTheDocument();
+    expect(screen.getByTestId('genderInput')).toBeInTheDocument();
+    expect(screen.getByTestId('confirmationInput')).toBeInTheDocument();
+    expect(screen.getByTestId('submitButton')).toBeInTheDocument();
   });
 
-  test('fullName must be more than 6 letters', () => {
-    render(<Form />);
+  it('should display required error when value is invalid', async () => {
+    render(<Form addCard={mockCard} />);
 
-    userEvent.type(screen.getByTestId('fullNameInput'), 'test');
-    fireEvent.click(screen.getByTestId('submit-button'));
-    expect(screen.getByText(/Your name must be more than 6 letters!/i)).toBeInTheDocument();
+    fireEvent.submit(screen.getByTestId('submitButton'));
+
+    expect(await screen.findAllByTestId('errorAlert')).toHaveLength(5);
+    expect(mockCard).not.toBeCalled();
   });
 
-  test('user must confirm', () => {
-    render(<Form />);
+  it('should display min length error when full name is invalid', async () => {
+    render(<Form addCard={mockCard} />);
 
-    userEvent.type(screen.getByTestId('fullNameInput'), 'test');
-    fireEvent.click(screen.getByTestId('submit-button'));
-    expect(screen.getByText(/Confirm if you are agree with!/i)).toBeInTheDocument();
+    userEvent.type(screen.getByTestId('fullNameInput'), 'One');
+    fireEvent.submit(screen.getByTestId('submitButton'));
+
+    expect(await screen.findByText(/Your name must be more than 6 letters!/i)).toBeInTheDocument();
+    expect(mockCard).not.toBeCalled();
+    expect((screen.getByTestId('fullNameInput') as HTMLInputElement).value).toBe('One');
   });
 
-  test('user must add country', () => {
-    render(<Form />);
+  it('should not display error when value is valid', async () => {
+    render(<Form addCard={mockCard} />);
 
-    userEvent.type(screen.getByTestId('fullNameInput'), 'test');
-    fireEvent.click(screen.getByTestId('submit-button'));
-    expect(screen.getByText(/Please enter your country!/i)).toBeInTheDocument();
+    userEvent.type(screen.getByTestId('fullNameInput'), 'One Two');
+    fireEvent.submit(screen.getByTestId('submitButton'));
+
+    expect(mockCard).not.toBeCalled();
+    expect(await screen.findAllByTestId('errorAlert')).toHaveLength(4);
+    expect((screen.getByTestId('fullNameInput') as HTMLInputElement).value).toBe('One Two');
   });
 
-  test('user must add birthday', () => {
-    render(<Form />);
+  it('should submit handler after submit', async () => {
+    const addCardHandler = jest.fn();
+    global.URL.createObjectURL = jest.fn();
 
-    userEvent.type(screen.getByTestId('fullNameInput'), 'test');
-    fireEvent.click(screen.getByTestId('submit-button'));
-    expect(screen.getByText(/Please enter your birthday!/i)).toBeInTheDocument();
+    const { getByTestId, getByText } = render(<Form addCard={addCardHandler} />);
+
+    const file = new File(['test content'], 'test.png', {
+      type: 'image/png',
+    });
+
+    await act(async () => {
+      fireEvent.change(getByTestId('fullNameInput'), { target: { value: 'One Two' } });
+      fireEvent.change(getByTestId('birthdayInput'), { target: { value: '2022-11-18' } });
+      fireEvent.change(getByTestId('countryInput'), { target: { value: 'Uzbekistan' } });
+      fireEvent.click(getByTestId('genderInput'));
+      fireEvent.click(getByTestId('confirmationInput'));
+
+      await waitFor(() => {
+        userEvent.upload(getByTestId('fileInput') as HTMLInputElement, file);
+      });
+    });
+
+    await act(async () => {
+      fireEvent.submit(getByTestId('form'));
+    });
+
+    await act(async () => {
+      expect(getByText(/Saved/i)).toBeInTheDocument();
+
+      if (addCardHandler) {
+        expect(addCardHandler).toHaveBeenCalled();
+      }
+    });
   });
-
-  test('checks if submit button is disabled', () => {
-    render(<Form />);
-
-    const element = screen.getByTestId('submit-button');
-    expect(element).toBeDisabled();
-  });
-
-  const addCard = (card: ItemInterface) => {
-    const newCard = {
-      ...card,
-      likes: 0,
-      views: 1,
-    };
-    const setState = (prevState: { cards: object[] }) => {
-      const updatedCards = prevState.cards.concat(newCard);
-      return { cards: [...updatedCards] };
-    };
-  };
 });
