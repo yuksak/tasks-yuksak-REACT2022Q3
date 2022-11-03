@@ -1,6 +1,6 @@
-import React, { useState, useEffect, FC } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { SearchBar, Cards, Loader } from 'components';
+import { SearchBar, Cards, Loader, Sort } from 'components';
 import styles from './index.module.scss';
 
 import { getAllData } from 'api';
@@ -50,7 +50,7 @@ const Home = () => {
   return (
     <div className={styles.home} data-testid="home">
       <SearchBar setSearchValue={setSearchValue} searchValue={searchValue} />
-
+      <Sort setCards={setCards} />
       {cards.length !== 0 && !isLoading ? (
         <Cards cards={cards} />
       ) : (
