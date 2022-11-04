@@ -2,7 +2,8 @@ import React, { Fragment } from 'react';
 
 import { Routes, Route } from 'react-router';
 
-import { NotFound, Home, AboutUs, Forms } from './pages';
+import { NotFound, Home, AboutUs, Forms, Detail } from './pages';
+
 import { Header } from 'components';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
+        <Route path="/character/:id" element={<Detail />} />
         <Route path="forms" element={<Forms />} />
         <Route path="about-us" element={<AboutUs />} />
       </Routes>
