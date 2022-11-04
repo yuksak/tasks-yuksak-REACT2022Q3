@@ -1,16 +1,18 @@
-import React, { FC } from 'react';
+import React, { useContext } from 'react';
 
 import styles from './index.module.scss';
 import { FiLoader, FiAlertTriangle } from 'react-icons/fi';
 
-import { ILoaderProps } from 'models/loader';
+import { MainContext } from 'store/main-context';
 
-const Loader: FC<ILoaderProps> = (props) => {
+const Loader = () => {
+  const ctx = useContext(MainContext);
+
   return (
     <div className={styles.loader} data-testid="loader">
-      {props.error && !props.isLoading ? (
+      {ctx.errorMessage && !ctx.isLoading ? (
         <p className={styles.error}>
-          <FiAlertTriangle /> {props.error}
+          <FiAlertTriangle /> {ctx.errorMessage}
         </p>
       ) : (
         <FiLoader className={styles.loading} />

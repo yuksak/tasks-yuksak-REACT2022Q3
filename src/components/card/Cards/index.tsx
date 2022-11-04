@@ -10,6 +10,7 @@ const Cards: FC<TCards> = (props) => {
     <div className={styles.cards} data-testid="cards">
       {props.cards?.map((item: ICard) => (
         <Card
+          id={item.id}
           key={item.id}
           fullName={item.fullName}
           image={item.image}

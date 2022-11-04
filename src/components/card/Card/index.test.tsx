@@ -4,31 +4,32 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import Card from './index';
+import { mockItems } from 'mock';
 
 describe('Card Component', () => {
   test('renders card', () => {
-    render(<Card />, { wrapper: MemoryRouter });
+    render(<Card {...mockItems[0]} />, { wrapper: MemoryRouter });
 
     const card = screen.getByTestId('card');
     expect(card).toBeInTheDocument();
   });
 
   test('renders card-image', () => {
-    render(<Card />, { wrapper: MemoryRouter });
+    render(<Card {...mockItems[0]} />, { wrapper: MemoryRouter });
 
     const cardImage = screen.getByTestId('card-image');
     expect(cardImage).toBeInTheDocument();
   });
 
   test('renders card-body', () => {
-    render(<Card />, { wrapper: MemoryRouter });
+    render(<Card {...mockItems[0]} />, { wrapper: MemoryRouter });
 
     const cardBody = screen.getByTestId('card-body');
     expect(cardBody).toBeInTheDocument();
   });
 
   test('renders card-stats', () => {
-    render(<Card />, { wrapper: MemoryRouter });
+    render(<Card {...mockItems[0]} />, { wrapper: MemoryRouter });
 
     fireEvent.click(screen.getByTestId('card'));
     const cardStats = screen.getByTestId('card-stats');
@@ -36,7 +37,7 @@ describe('Card Component', () => {
   });
 
   test('check opener', () => {
-    render(<Card />, { wrapper: MemoryRouter });
+    render(<Card {...mockItems[0]} />, { wrapper: MemoryRouter });
 
     const card = screen.getByTestId('card');
     fireEvent.click(card);
@@ -44,7 +45,7 @@ describe('Card Component', () => {
   });
 
   test('check closer', () => {
-    render(<Card />, { wrapper: MemoryRouter });
+    render(<Card {...mockItems[0]} />, { wrapper: MemoryRouter });
 
     fireEvent.click(screen.getByTestId('card'));
 
@@ -54,7 +55,7 @@ describe('Card Component', () => {
   });
 
   test('check modal and detailed card', () => {
-    render(<Card />, { wrapper: MemoryRouter });
+    render(<Card {...mockItems[0]} />, { wrapper: MemoryRouter });
 
     fireEvent.click(screen.getByTestId('card'));
 
@@ -66,7 +67,7 @@ describe('Card Component', () => {
   });
 
   test('check modal closer button', () => {
-    render(<Card />, { wrapper: MemoryRouter });
+    render(<Card {...mockItems[0]} />, { wrapper: MemoryRouter });
 
     fireEvent.click(screen.getByTestId('card'));
 

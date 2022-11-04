@@ -1,39 +1,31 @@
-import React, { FC } from 'react';
+import React, { useContext } from 'react';
 
-import { ISortProps } from 'models/sort';
 import styles from './index.module.scss';
+import { MainContext } from 'store/main-context';
 
 const sort = ['by ID', 'by Alphabet'];
 
-const Sort: FC<ISortProps> = (props) => {
+const Sort = () => {
+  const ctx = useContext(MainContext);
+
   const sortHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === 'by ID') {
-      props.setCards((prevCards) =>
-        [...prevCards].sort((a, b) => {
-          if (a?.id && b?.id) {
-            if (a.id > b.id) return 1;
-            if (a.id < b.id) return -1;
-          }
-          return 0;
-        })
-      );
+      ctx.setCards([...ctx.cards].sort((a, b) => a.id - b.id));
+    }
+    if (e.target.value === 'by Alphabet') {
+      ctx.setCards([...ctx.cards].sort((a, b) => a.fullName.localeCompare(b.fullName)));
     }
 
-    if (e.target.value === 'by Alphabet') {
-      props.setCards((prevCards) =>
-        [...prevCards].sort((a, b) => {
-          if (a?.fullName && b?.fullName) {
-            if (a.fullName > b.fullName) return 1;
-            if (a.fullName < b.fullName) return -1;
-          }
-          return 0;
-        })
-      );
-    }
+    localStorage.setItem('sortValue', e.target.value);
   };
 
   return (
-    <select name="Sort" defaultValue="" className={styles.sort} onChange={sortHandler}>
+    <select
+      name="Sort"
+      value={localStorage.getItem('sortValue')?.toString()}
+      className={styles.sort}
+      onChange={sortHandler}
+    >
       {sort.map((name: string) => (
         <option key={name} value={name}>
           {name}

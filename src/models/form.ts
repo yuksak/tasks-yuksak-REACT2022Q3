@@ -1,5 +1,3 @@
-import { ICard } from './cards';
-
 export interface IFormInputs {
   fullName: string;
   birthday: string;
@@ -8,7 +6,3 @@ export interface IFormInputs {
   image: FileList;
   confirmation: boolean;
 }
-
-export type TFormProps = {
-  addCard?: (cards: ICard) => void;
-};

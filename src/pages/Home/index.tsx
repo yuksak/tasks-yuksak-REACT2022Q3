@@ -1,61 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 
 import { SearchBar, Cards, Loader, Sort } from 'components';
 import styles from './index.module.scss';
 
-import { getAllData } from 'api';
-import { ICard, IResult } from 'models/cards';
+import { MainContext } from 'store/main-context';
 
 const Home = () => {
-  const [cards, setCards] = useState<ICard[]>([]);
-  const [searchValue, setSearchValue] = useState<string>('');
-  const [errorMessage, setErrorMessage] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const fetchData = async () => {
-    setIsLoading(true);
-    const response = await getAllData(searchValue);
-
-    if (response.error) {
-      setErrorMessage('No exact matches found.');
-      setCards([]);
-      setIsLoading(false);
-    }
-
-    if (response.results) {
-      const formattedResults = response.results.map((result: IResult) => {
-        return {
-          id: result.id,
-          fullName: result.name,
-          gender: result.gender,
-          birthday: result.created,
-          image: result.image,
-          country: result.origin?.name,
-          views: 1233,
-          likes: 941,
-          created: result.created,
-        };
-      });
-
-      setErrorMessage('');
-      setCards(formattedResults);
-    }
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [searchValue]);
+  const ctx = useContext(MainContext);
 
   return (
     <div className={styles.home} data-testid="home">
-      <SearchBar setSearchValue={setSearchValue} searchValue={searchValue} />
-      <Sort setCards={setCards} />
-      {cards.length !== 0 && !isLoading ? (
-        <Cards cards={cards} />
-      ) : (
-        <Loader error={errorMessage} isLoading={isLoading} />
-      )}
+      <SearchBar />
+      <Sort />
+      {ctx.cards.length !== 0 && !ctx.isLoading ? <Cards cards={ctx.cards} /> : <Loader />}
     </div>
   );
 };

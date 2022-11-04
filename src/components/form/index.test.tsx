@@ -14,14 +14,14 @@ describe('Form Page', () => {
   afterEach(cleanup);
 
   it('renders form component', () => {
-    render(<Form addCard={mockCard} />);
+    render(<Form />);
 
     const element = screen.getByTestId('form');
     expect(element).toBeInTheDocument();
   });
 
   it('should render the basic fields', () => {
-    render(<Form addCard={mockCard} />);
+    render(<Form />);
 
     expect(screen.getByTestId('fullNameInput')).toBeInTheDocument();
     expect(screen.getByTestId('birthdayInput')).toBeInTheDocument();
@@ -32,7 +32,7 @@ describe('Form Page', () => {
   });
 
   it('should display required error when value is invalid', async () => {
-    render(<Form addCard={mockCard} />);
+    render(<Form />);
 
     fireEvent.submit(screen.getByTestId('submitButton'));
 
@@ -41,7 +41,7 @@ describe('Form Page', () => {
   });
 
   it('should display min length error when full name is invalid', async () => {
-    render(<Form addCard={mockCard} />);
+    render(<Form />);
 
     userEvent.type(screen.getByTestId('fullNameInput'), 'One');
     fireEvent.submit(screen.getByTestId('submitButton'));
@@ -52,7 +52,7 @@ describe('Form Page', () => {
   });
 
   it('should not display error when value is valid', async () => {
-    render(<Form addCard={mockCard} />);
+    render(<Form />);
 
     userEvent.type(screen.getByTestId('fullNameInput'), 'One Two');
     fireEvent.submit(screen.getByTestId('submitButton'));
@@ -66,7 +66,7 @@ describe('Form Page', () => {
     const addCardHandler = jest.fn();
     global.URL.createObjectURL = jest.fn();
 
-    const { getByTestId, getByText } = render(<Form addCard={addCardHandler} />);
+    const { getByTestId, getByText } = render(<Form />);
 
     const file = new File(['test content'], 'test.png', {
       type: 'image/png',

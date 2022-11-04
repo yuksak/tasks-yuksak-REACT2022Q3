@@ -1,12 +1,15 @@
-import React, { FC, useCallback, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { countries } from 'mock';
 import styles from './index.module.scss';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { IFormInputs, TFormProps } from 'models/form';
+import { IFormInputs } from 'models/form';
+import { MainContext } from 'store/main-context';
 
-const Form: FC<TFormProps> = (props) => {
+const Form = () => {
+  const ctx = useContext(MainContext);
+
   const {
     reset,
     register,
@@ -42,10 +45,8 @@ const Form: FC<TFormProps> = (props) => {
       likes: 23,
     };
 
-    if (props.addCard) {
-      props.addCard(newCard);
-      e?.target.reset();
-    }
+    ctx.addForm(newCard);
+    e?.target.reset();
   };
 
   return (

@@ -1,11 +1,12 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import styles from './index.module.scss';
 
 import { FiSearch } from 'react-icons/fi';
-import { ISearchProps } from 'models/searchBar';
+import { MainContext } from 'store/main-context';
 
-const SearchBar: FC<ISearchProps> = (props) => {
+const SearchBar = () => {
+  const ctx = useContext(MainContext);
   const searchValue = localStorage.getItem('searchValue') || '';
   const [enteredValue, setEnteredValue] = useState<string>(searchValue);
 
@@ -18,7 +19,7 @@ const SearchBar: FC<ISearchProps> = (props) => {
   };
 
   const submitHandler = () => {
-    props.setSearchValue(enteredValue);
+    ctx.setSearch(enteredValue);
   };
 
   const keyboardHandler = (e: React.KeyboardEvent) => {

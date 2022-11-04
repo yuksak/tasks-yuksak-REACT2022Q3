@@ -1,21 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 
 import { Cards, Form } from 'components';
 
 import styles from './index.module.scss';
-import { ICard } from 'models/cards';
+import { MainContext } from 'store/main-context';
 
 const Forms = () => {
-  const [cards, setCards] = useState<ICard[]>([]);
-
-  const addCard = (card: ICard) => {
-    setCards((prevCards) => prevCards.concat(card));
-  };
+  const ctx = useContext(MainContext);
 
   return (
     <div className={styles.section} data-testid="forms-page">
-      <Form addCard={addCard} />
-      <Cards cards={cards} />
+      <Form />
+      <Cards cards={ctx.forms} />
     </div>
   );
 };

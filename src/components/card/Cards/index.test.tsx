@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import Cards from './index';
-import { mockItems } from '../../../mock/index';
+import { mockItems } from 'mock';
 
 describe('Cards Component', () => {
   test('renders images alt', () => {
