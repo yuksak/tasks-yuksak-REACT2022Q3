@@ -2,11 +2,19 @@ import React, { FC, useState, useEffect, useReducer } from 'react';
 import { ICard, IResult } from 'models/cards';
 
 import { getAllData } from 'api';
-import { ActionType, ContextProps, TContext, TReducerAction, TReducerState } from 'models/context';
+import {
+  ActionType,
+  ContextProps,
+  TContext,
+  TInfo,
+  TReducerAction,
+  TReducerState,
+} from 'models/context';
 
 const { BEFORE_FETCH, ERROR_FETCH, SUCCESS_FETCH, SET_CARDS } = ActionType;
 
 export const MainContext = React.createContext<TContext>({
+  info: { count: 0, pages: 0, next: '', prev: '' },
   cards: [],
   forms: [],
   searchValue: '',
@@ -15,6 +23,9 @@ export const MainContext = React.createContext<TContext>({
   addForm: () => {},
   setCards: () => {},
   setSearch: () => {},
+  nextPage: () => {},
+  prevPage: () => {},
+  setPageNumber: () => {},
 });
 
 const cardsReducer = (state: TReducerState, action: TReducerAction) => {
@@ -41,6 +52,8 @@ const cardsReducer = (state: TReducerState, action: TReducerAction) => {
 const MainContextProvider: FC<ContextProps> = (props) => {
   const [forms, setForms] = useState<ICard[]>([]);
   const [searchValue, setSearchValue] = useState<string>('');
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [info, setInfo] = useState<TInfo>({ count: 1, pages: 1, next: '', prev: '' });
 
   const [cardsState, dispatchCard] = useReducer(cardsReducer, {
     value: [],
@@ -51,7 +64,7 @@ const MainContextProvider: FC<ContextProps> = (props) => {
   const fetchData = async () => {
     dispatchCard({ type: BEFORE_FETCH, payload: [] });
 
-    const response = await getAllData(searchValue);
+    const response = await getAllData({ searchValue, pageNumber });
 
     if (response.error) {
       dispatchCard({
@@ -75,6 +88,7 @@ const MainContextProvider: FC<ContextProps> = (props) => {
         };
       });
 
+      setInfo(response.info);
       dispatchCard({
         type: SUCCESS_FETCH,
         payload: formattedResults,
@@ -84,7 +98,7 @@ const MainContextProvider: FC<ContextProps> = (props) => {
 
   useEffect(() => {
     fetchData();
-  }, [searchValue]);
+  }, [searchValue, pageNumber]);
 
   const setCards = (cards: ICard[]) => {
     dispatchCard({
@@ -97,6 +111,17 @@ const MainContextProvider: FC<ContextProps> = (props) => {
     setForms((prevForms) => prevForms.concat(form));
   };
 
+  const nextPage = () => {
+    setPageNumber((prevState) => prevState + 1);
+  };
+
+  const prevPage = () => {
+    setPageNumber((prevState) => {
+      if (prevState < 2) return 1;
+      return prevState - 1;
+    });
+  };
+
   const contextValue = {
     cards: cardsState.value,
     isLoading: cardsState.isLoading,
@@ -106,6 +131,10 @@ const MainContextProvider: FC<ContextProps> = (props) => {
     addForm,
     setCards,
     setSearch: setSearchValue,
+    nextPage,
+    prevPage,
+    setPageNumber,
+    info,
   };
 
   return <MainContext.Provider value={contextValue}>{props.children}</MainContext.Provider>;

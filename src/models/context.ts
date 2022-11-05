@@ -1,6 +1,14 @@
 import { ICard } from './cards';
 
+export interface TInfo {
+  count: number;
+  pages: number;
+  next: string;
+  prev?: string;
+}
+
 export type TContext = {
+  info: TInfo;
   cards: ICard[];
   forms: ICard[];
   isLoading: boolean;
@@ -9,6 +17,9 @@ export type TContext = {
   addForm: (form: ICard) => void;
   setCards: (card: ICard[]) => void;
   setSearch: (value: string) => void;
+  nextPage: () => void;
+  prevPage: () => void;
+  setPageNumber: (value: number) => void;
 };
 
 export type ContextProps = {

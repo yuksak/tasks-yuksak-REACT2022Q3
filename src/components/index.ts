@@ -4,4 +4,6 @@ import Header from './header';
 import Form from './form';
 import Loader from './loader';
 import Sort from './sort';
-export { Header, SearchBar, Cards, Form, Loader, Sort };
+import Pagination from './pagination';
+
+export { Header, SearchBar, Cards, Form, Loader, Sort, Pagination };

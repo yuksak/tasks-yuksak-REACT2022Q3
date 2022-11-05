@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { SearchBar, Cards, Loader, Sort } from 'components';
+import { SearchBar, Cards, Loader, Sort, Pagination } from 'components';
 import styles from './index.module.scss';
 
 import { MainContext } from 'store/main-context';
@@ -13,6 +13,7 @@ const Home = () => {
       <SearchBar />
       <Sort />
       {ctx.cards.length !== 0 && !ctx.isLoading ? <Cards cards={ctx.cards} /> : <Loader />}
+      <Pagination />
     </div>
   );
 };
