@@ -6,14 +6,14 @@ import styles from './index.module.scss';
 import { MainContext } from 'store/main-context';
 
 const Home = () => {
-  const ctx = useContext(MainContext);
+  const { cards, isLoading, info } = useContext(MainContext);
 
   return (
     <div className={styles.home} data-testid="home">
       <SearchBar />
       <Sort />
-      {ctx.cards.length !== 0 && !ctx.isLoading ? <Cards cards={ctx.cards} /> : <Loader />}
-      <Pagination />
+      {cards.length !== 0 && !isLoading ? <Cards cards={cards} /> : <Loader />}
+      {info.pages !== 1 && !isLoading ? <Pagination /> : null}
     </div>
   );
 };
