@@ -1,10 +1,25 @@
-const API_LINK = 'https://rickandmortyapi.com/api/';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { FetchCardsError, TData, TProps } from 'models/cardsSlice';
 
-export const getAllData = async (props: { searchValue: string; pageNumber: number }) => {
-  const data = await fetch(
-    API_LINK + `character/?page=${props.pageNumber}&name=${props.searchValue}`
-  );
-  const response = await data.json();
+export const getAllCards = createAsyncThunk<TData, TProps, { rejectValue: FetchCardsError }>(
+  '/cards/fetch',
+  async (p: TProps, thunkApi) => {
+    try {
+      const response = await fetch(
+        `https://rickandmortyapi.com/api/character/?page=${p.pageNumber}&name=${p.searchValue}`
+      );
+      const data: TData = await response.json();
 
-  return response;
-};
+      if (!response.ok) {
+        return thunkApi.rejectWithValue({
+          message: 'No exact matches found.',
+        });
+      }
+      return data;
+    } catch (err) {
+      return thunkApi.rejectWithValue({
+        message: 'Failed to fetch cards.',
+      });
+    }
+  }
+);

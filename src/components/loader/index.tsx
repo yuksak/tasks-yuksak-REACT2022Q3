@@ -1,18 +1,18 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import styles from './index.module.scss';
+import { useAppSelector } from 'hooks';
 import { FiLoader, FiAlertTriangle } from 'react-icons/fi';
 
-import { MainContext } from 'store/main-context';
+import styles from './index.module.scss';
 
 const Loader = () => {
-  const ctx = useContext(MainContext);
+  const { error, status } = useAppSelector((state) => state.cards);
 
   return (
     <div className={styles.loader} data-testid="loader">
-      {ctx.errorMessage && !ctx.isLoading ? (
+      {error && status === 'Rejected' ? (
         <p className={styles.error}>
-          <FiAlertTriangle /> {ctx.errorMessage}
+          <FiAlertTriangle /> {error}
         </p>
       ) : (
         <FiLoader className={styles.loading} />

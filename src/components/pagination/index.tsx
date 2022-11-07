@@ -1,37 +1,36 @@
-import React, { useContext, useState } from 'react';
-import { MainContext } from 'store/main-context';
+import React, { useState } from 'react';
+import { useAppDispatch, useAppSelector } from 'hooks';
 
 import styles from './index.module.scss';
+import { nextPage, prevPage, setPage } from 'store/slices/cardsSlice';
 
 const Pagination = () => {
-  const { prevPage, nextPage, setPageNumber, info } = useContext(MainContext);
-  const [input, setInput] = useState<string>('');
+  const dispatch = useAppDispatch();
 
-  const str = 'https://rickandmortyapi.com/api/character/?page=';
+  const [input, setInput] = useState<string>('');
+  const { currentPage, info } = useAppSelector((state) => state.cards);
 
   const setPageHandler = () => {
-    setPageNumber(Number(input));
+    dispatch(setPage(Number(input)));
   };
 
   return (
     <div className={styles.pagination}>
-      <button onClick={prevPage} disabled={info.prev === null}>
+      <button onClick={() => dispatch(prevPage())} disabled={Boolean(info?.prev === null)}>
         Prev
       </button>
       <button>
-        {info.next !== null
-          ? Number(info.next.replace(str, '')) - 1
-          : Number(info.prev?.replace(str, '')) + 1}{' '}
-        / {info.pages}
+        {currentPage} / {info?.pages}
       </button>
-      <button onClick={nextPage} disabled={info.next === null}>
+      <button onClick={() => dispatch(nextPage())} disabled={info?.next === null}>
         Next
       </button>
       <input
         value={input}
+        className={styles.input}
         onChange={(e) => setInput((e.target as HTMLInputElement).value)}
         type="number"
-        max={info.pages}
+        max={info?.pages}
         min="1"
       />
       <button onClick={setPageHandler}>Set</button>

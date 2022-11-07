@@ -1,17 +1,19 @@
 import React, { useContext } from 'react';
 
-import { Cards, Form } from 'components';
+import { Form } from 'components';
+
+import { useAppSelector } from 'hooks';
+import FormCards from 'components/form/formCards';
 
 import styles from './index.module.scss';
-import { MainContext } from 'store/main-context';
 
 const Forms = () => {
-  const ctx = useContext(MainContext);
+  const { forms } = useAppSelector((state) => state.forms);
 
   return (
     <div className={styles.section} data-testid="forms-page">
       <Form />
-      <Cards cards={ctx.forms} />
+      <FormCards cards={forms} />
     </div>
   );
 };

@@ -1,14 +1,16 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
+
+import { useAppDispatch } from 'hooks';
+import { addForm } from 'store/slices/formsSlice';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { countries } from 'mock';
+import { IFormInputs } from 'models/form';
+
 import styles from './index.module.scss';
 
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { IFormInputs } from 'models/form';
-import { MainContext } from 'store/main-context';
-
 const Form = () => {
-  const ctx = useContext(MainContext);
+  const dispatch = useAppDispatch();
 
   const {
     reset,
@@ -35,17 +37,15 @@ const Form = () => {
   ) => {
     const newCard = {
       id: new Date().getTime(),
-      fullName,
+      name: fullName,
       birthday,
-      country,
+      origin: { name: country },
       gender,
       image: URL.createObjectURL(image[0]),
       created: new Date().toISOString(),
-      views: 1,
-      likes: 23,
     };
 
-    ctx.addForm(newCard);
+    dispatch(addForm(newCard));
     e?.target.reset();
   };
 
@@ -198,7 +198,6 @@ const Form = () => {
               value="Clear"
               className={styles.clearButton}
               data-testid="clearButton"
-              // onClick={() => reset()}
             />
           ) : null}
 

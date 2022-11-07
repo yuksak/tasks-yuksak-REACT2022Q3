@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-
 import { Routes, Route } from 'react-router';
 
 import { NotFound, Home, AboutUs, Forms, Detail } from './pages';

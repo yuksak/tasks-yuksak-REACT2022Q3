@@ -1,26 +1,19 @@
 export interface ICard {
   id: number;
-  fullName: string;
+  name: string;
   image: string;
-  country: string;
-  birthday: string;
+  origin: { name: string };
   gender: string;
-  views: number;
-  likes: number;
   created: string;
+}
+
+export interface IInfo {
+  count: number;
+  pages: number;
+  next: string | null;
+  prev: string | null;
 }
 
 export type TCards = {
   cards: ICard[];
 };
-
-export interface IResult {
-  id: number;
-  name: string;
-  image: string;
-  origin: { name: string };
-  created: string;
-  gender: string;
-  views: number;
-  likes: number;
-}
