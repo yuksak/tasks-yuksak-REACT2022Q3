@@ -1,4 +1,4 @@
-import { ItemInterface } from '../models';
+import { ICard } from 'models/cards';
 
 export const countries: string[] = [
   'Select',
@@ -10,7 +10,7 @@ export const countries: string[] = [
   'Tajikistan',
 ];
 
-export const mockItems: ItemInterface[] = [
+export const mockItems: ICard[] = [
   {
     id: 1,
     fullName: 'Islam Makhachev',

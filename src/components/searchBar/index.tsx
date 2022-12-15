@@ -1,57 +1,51 @@
-import React, { PureComponent } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+
 import styles from './index.module.scss';
+
 import { FiSearch } from 'react-icons/fi';
-import { ISearch } from 'models';
+import { ISearchProps } from 'models/searchBar';
 
-class SearchBar extends PureComponent<ISearch> {
-  constructor(props: ISearch) {
-    super(props);
-  }
+const SearchBar: FC<ISearchProps> = (props) => {
+  const searchValue = localStorage.getItem('searchValue') || '';
+  const [enteredValue, setEnteredValue] = useState<string>(searchValue);
 
-  componentDidMount = () => {
-    const searchValue = localStorage.getItem('searchValue');
-    if (searchValue) this.props.setSearchValue(searchValue);
+  useEffect(() => {
+    localStorage.setItem('searchValue', enteredValue);
+  }, [enteredValue]);
+
+  const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEnteredValue(e.target.value);
   };
 
-  componentWillUnmount = () => localStorage.setItem('searchValue', this.props.searchValue);
-
-  searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.props.setSearchValue(e.target.value);
+  const submitHandler = () => {
+    props.setSearchValue(enteredValue);
   };
 
-  submitHandler = () => {
-    this.props.setSubmission(true);
+  const keyboardHandler = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') submitHandler();
   };
 
-  keyboardHandler = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      this.props.setSubmission(true);
-    }
-  };
-
-  render() {
-    return (
-      <div className={styles.search} data-testid="search-bar">
-        <input
-          type="search"
-          placeholder="Search"
-          className={styles.searchInput}
-          value={this.props.searchValue}
-          onChange={this.searchHandler}
-          onKeyDown={this.keyboardHandler}
-          data-testid="search-input"
-        />
-        <button
-          type="submit"
-          className={styles.submitButton}
-          onClick={this.submitHandler}
-          data-testid="search-button"
-        >
-          <FiSearch />
-        </button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={styles.search} data-testid="search-bar">
+      <input
+        type="search"
+        placeholder="Search"
+        className={styles.searchInput}
+        value={enteredValue}
+        onChange={searchHandler}
+        onKeyDown={keyboardHandler}
+        data-testid="search-input"
+      />
+      <button
+        type="button"
+        className={styles.submitButton}
+        onClick={submitHandler}
+        data-testid="search-button"
+      >
+        <FiSearch />
+      </button>
+    </div>
+  );
+};
 
 export default SearchBar;

@@ -1,9 +1,6 @@
 import React from 'react';
 
-import { fireEvent, render, screen } from '@testing-library/react';
-import Form from './index';
-import userEvent from '@testing-library/user-event';
-import { ItemInterface } from 'models';
+import { render, screen } from '@testing-library/react';
 import Loader from './index';
 
 describe('loader component', () => {

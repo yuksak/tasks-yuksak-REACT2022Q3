@@ -1,42 +1,23 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 import { Cards, Form } from 'components';
 
 import styles from './index.module.scss';
-import { ItemInterface } from 'models';
+import { ICard } from 'models/cards';
 
-interface FormsState {
-  cards: ItemInterface[];
-}
+const Forms = () => {
+  const [cards, setCards] = useState<ICard[]>([]);
 
-class Forms extends Component<Record<string, unknown>, FormsState> {
-  constructor(props: Record<string, unknown> | Readonly<Record<string, unknown>>) {
-    super(props);
-    this.state = {
-      cards: [] as ItemInterface[],
-    };
-  }
-
-  addCard = (card: ItemInterface) => {
-    const newCard = {
-      ...card,
-      likes: 0,
-      views: 1,
-    };
-    this.setState((prevState) => {
-      const updatedCards = prevState.cards.concat(newCard);
-      return { cards: [...updatedCards] };
-    });
+  const addCard = (card: ICard) => {
+    setCards((prevCards) => prevCards.concat(card));
   };
 
-  render() {
-    return (
-      <div className={styles.section} data-testid="forms-page">
-        <Form addCard={this.addCard} />
-        <Cards cardData={this.state.cards} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className={styles.section} data-testid="forms-page">
+      <Form addCard={addCard} />
+      <Cards cards={cards} />
+    </div>
+  );
+};
 
 export default Forms;
