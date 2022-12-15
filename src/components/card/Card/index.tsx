@@ -1,9 +1,8 @@
 import React, { FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import styles from './index.module.scss';
-
 import { ICard } from 'models/cards';
+import styles from './index.module.scss';
 
 const Card: FC<ICard> = (props) => {
   const navigate = useNavigate();
@@ -20,7 +19,7 @@ const Card: FC<ICard> = (props) => {
         </div>
         <div className={styles.body} data-testid="card-body">
           <Link to="#" className={styles.title}>
-            {props.fullName}
+            {props.name}
           </Link>
         </div>
       </div>

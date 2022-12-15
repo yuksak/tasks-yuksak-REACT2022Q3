@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
+
+import { useAppSelector } from 'hooks';
 import { NavLink, useLocation } from 'react-router-dom';
-import { MainContext } from 'store/main-context';
 
 import styles from './index.module.scss';
 
@@ -8,7 +9,7 @@ const classIsActive = ({ isActive }: { isActive: boolean }) =>
   isActive ? styles.active : undefined;
 
 const Header = () => {
-  const { cards } = useContext(MainContext);
+  const { cards } = useAppSelector((state) => state.cards);
   const { pathname } = useLocation();
 
   const detailedData = cards.filter(

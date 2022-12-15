@@ -1,21 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
+
+import { useAppDispatch } from 'hooks';
+import { sortCards } from 'store/slices/cardsSlice';
 
 import styles from './index.module.scss';
-import { MainContext } from 'store/main-context';
 
-const sort = ['by ID', 'by Alphabet'];
+const sort = ['by-ID', 'by-Alphabet'];
 
 const Sort = () => {
-  const ctx = useContext(MainContext);
+  const dispatch = useAppDispatch();
 
   const sortHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (e.target.value === 'by ID') {
-      ctx.setCards([...ctx.cards].sort((a, b) => a.id - b.id));
-    }
-    if (e.target.value === 'by Alphabet') {
-      ctx.setCards([...ctx.cards].sort((a, b) => a.fullName.localeCompare(b.fullName)));
-    }
-
+    dispatch(sortCards(e.target.value));
     localStorage.setItem('sortValue', e.target.value);
   };
 

@@ -1,25 +1,27 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, FC, useState } from 'react';
+import { useAppDispatch } from 'hooks';
 
-import styles from './index.module.scss';
+import { setPage } from 'store/slices/cardsSlice';
+import { ISearchProps } from 'models/searchBar';
 
 import { FiSearch } from 'react-icons/fi';
-import { MainContext } from 'store/main-context';
+import styles from './index.module.scss';
 
-const SearchBar = () => {
-  const ctx = useContext(MainContext);
-  const searchValue = localStorage.getItem('searchValue') || '';
-  const [enteredValue, setEnteredValue] = useState<string>(searchValue);
+const SearchBar: FC<ISearchProps> = ({ setSearchValue, searchValue }) => {
+  const [input, setInput] = useState<string>(searchValue);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    localStorage.setItem('searchValue', enteredValue);
-  }, [enteredValue]);
+    localStorage.setItem('searchValue', input);
+  }, [input]);
 
   const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEnteredValue(e.target.value);
+    setInput(e.target.value);
   };
 
   const submitHandler = () => {
-    ctx.setSearch(enteredValue);
+    dispatch(setPage(1));
+    setSearchValue(input);
   };
 
   const keyboardHandler = (e: React.KeyboardEvent) => {
@@ -32,7 +34,7 @@ const SearchBar = () => {
         type="search"
         placeholder="Search"
         className={styles.searchInput}
-        value={enteredValue}
+        value={input}
         onChange={searchHandler}
         onKeyDown={keyboardHandler}
         data-testid="search-input"

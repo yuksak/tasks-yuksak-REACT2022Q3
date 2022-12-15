@@ -1,4 +1,4 @@
 export interface ISearchProps {
   searchValue: string;
-  setSearchValue: (searchValue: string) => void;
+  setSearchValue: (value: string) => void;
 }
