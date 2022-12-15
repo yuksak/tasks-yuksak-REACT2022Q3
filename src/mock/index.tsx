@@ -20,6 +20,7 @@ export const mockItems: ICard[] = [
     country: 'Russia',
     views: 7022,
     likes: 890,
+    created: '12-12-1222',
   },
   {
     id: 2,
@@ -30,6 +31,7 @@ export const mockItems: ICard[] = [
     country: 'Russia',
     views: 7022,
     likes: 890,
+    created: '12-12-1222',
   },
   {
     id: 3,
@@ -40,6 +42,7 @@ export const mockItems: ICard[] = [
     country: 'Russia',
     views: 7022,
     likes: 890,
+    created: '12-12-1222',
   },
   {
     id: 4,
@@ -50,6 +53,7 @@ export const mockItems: ICard[] = [
     country: 'Russia',
     views: 7022,
     likes: 890,
+    created: '12-12-1222',
   },
   {
     id: 5,
@@ -60,6 +64,7 @@ export const mockItems: ICard[] = [
     country: 'Russia',
     views: 7022,
     likes: 890,
+    created: '12-12-1222',
   },
   {
     id: 6,
@@ -70,6 +75,7 @@ export const mockItems: ICard[] = [
     country: 'Russia',
     views: 7022,
     likes: 890,
+    created: '12-12-1222',
   },
   {
     id: 7,
@@ -80,6 +86,7 @@ export const mockItems: ICard[] = [
     country: 'Russia',
     views: 7022,
     likes: 890,
+    created: '12-12-1222',
   },
   {
     id: 8,
@@ -90,6 +97,7 @@ export const mockItems: ICard[] = [
     country: 'Russia',
     views: 7022,
     likes: 890,
+    created: '12-12-1222',
   },
   {
     id: 9,
@@ -100,6 +108,7 @@ export const mockItems: ICard[] = [
     country: 'Russia',
     views: 7022,
     likes: 890,
+    created: '12-12-1222',
   },
   {
     id: 10,
@@ -110,5 +119,6 @@ export const mockItems: ICard[] = [
     country: 'Russia',
     views: 7022,
     likes: 890,
+    created: '12-12-1222',
   },
 ];

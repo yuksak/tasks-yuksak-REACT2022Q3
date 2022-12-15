@@ -1,0 +1,29 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 1rem;
+  margin: 1rem 0;
+  transition: all 1s;
+}
+
+button {
+  border: none;
+  background: #1957bf;
+  padding: 0.5rem 1rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:disabled {
+    visibility: hidden;
+  }
+}
+
+input {
+  border: 2px solid #1957bf;
+}
