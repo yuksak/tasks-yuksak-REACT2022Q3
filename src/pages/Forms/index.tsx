@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Cards, Form } from 'components';
 
-import classes from './index.module.scss';
+import styles from './index.module.scss';
 import { ItemInterface } from 'models';
 
 interface FormsState {
@@ -31,7 +31,7 @@ class Forms extends Component<Record<string, unknown>, FormsState> {
 
   render() {
     return (
-      <div className={classes.section} data-testid="forms-page">
+      <div className={styles.section} data-testid="forms-page">
         <Form addCard={this.addCard} />
         <Cards cardData={this.state.cards} />
       </div>

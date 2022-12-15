@@ -7,6 +7,7 @@ export interface ItemInterface {
   gender?: string;
   views?: number;
   likes?: number;
+  created?: string;
 }
 
 export type ItemsType = {
@@ -29,3 +30,28 @@ export interface FormState {
 export type FormProps = {
   addCard?: (cardData: ItemInterface) => void;
 };
+
+export interface IResult {
+  id?: number;
+  name?: string;
+  image?: string;
+  origin?: { name: string };
+  created?: string;
+  gender?: string;
+  views?: number;
+  likes?: number;
+}
+
+export interface ISearch {
+  searchValue: string;
+  setSearchValue: (searchValue: string) => void;
+  setSubmission: (value: boolean) => void;
+}
+
+export interface IHomeState {
+  cardData: object[];
+  searchValue: string;
+  errorMessage: string;
+  isLoading: boolean;
+  isSubmitted: boolean;
+}

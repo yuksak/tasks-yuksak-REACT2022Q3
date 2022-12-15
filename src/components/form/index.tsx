@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { countries } from 'mock';
 import { FormProps, FormState } from 'models';
-import classes from './index.module.scss';
+import styles from './index.module.scss';
 
 class Form extends Component<FormProps, FormState> {
   fullNameInput: React.RefObject<HTMLInputElement>;
@@ -156,12 +156,12 @@ class Form extends Component<FormProps, FormState> {
 
   render() {
     return (
-      <div className={classes.block} data-testid="form-block">
-        <form className={classes.form} data-testid="form" onSubmit={this.formSubmissionHandler}>
-          <div className={classes.form__fullName}>
+      <div className={styles.block} data-testid="form-block">
+        <form className={styles.form} data-testid="form" onSubmit={this.formSubmissionHandler}>
+          <div className={styles.fullName}>
             <label htmlFor="fullName">Full Name:</label>
             <input
-              className={classes.form__input}
+              className={styles.input}
               id="fullNameInput"
               data-testid="fullNameInput"
               type="text"
@@ -170,14 +170,14 @@ class Form extends Component<FormProps, FormState> {
               onFocus={this.handleFocus}
               ref={this.fullNameInput}
             />
-            <label className={classes.form__error}>{this.state.errors.fullNameInput}</label>
+            <label className={styles.error}>{this.state.errors.fullNameInput}</label>
           </div>
-          <div className={classes.form__birthInfo}>
+          <div className={styles.birthInfo}>
             <div>
               <label htmlFor="birthday">Birthday:</label>
 
               <input
-                className={classes.form__input}
+                className={styles.input}
                 id="birthdayInput"
                 type="date"
                 placeholder="Birthday"
@@ -185,12 +185,12 @@ class Form extends Component<FormProps, FormState> {
                 onFocus={this.handleFocus}
                 ref={this.birthdayInput}
               />
-              <label className={classes.form__error}>{this.state.errors.birthdayInput}</label>
+              <label className={styles.error}>{this.state.errors.birthdayInput}</label>
             </div>
             <div>
               <label htmlFor="country">Country:</label>
               <select
-                className={classes.form__input}
+                className={styles.input}
                 name="country"
                 id="countryInput"
                 defaultValue=""
@@ -208,11 +208,11 @@ class Form extends Component<FormProps, FormState> {
                   </option>
                 ))}
               </select>
-              <label className={classes.form__error}>{this.state.errors.countryInput}</label>
+              <label className={styles.error}>{this.state.errors.countryInput}</label>
             </div>
           </div>
 
-          <div className={classes.form__gender}>
+          <div className={styles.gender}>
             <div style={{ marginRight: '1rem' }}>
               <input
                 type="radio"
@@ -236,10 +236,10 @@ class Form extends Component<FormProps, FormState> {
               />
               <label>Female</label>
             </div>
-            <label className={classes.form__error}>{this.state.errors.genderInput}</label>
+            <label className={styles.error}>{this.state.errors.genderInput}</label>
           </div>
 
-          <div className={classes.form__file}>
+          <div className={styles.file}>
             <input
               id="imageInput"
               type="file"
@@ -248,10 +248,10 @@ class Form extends Component<FormProps, FormState> {
               onFocus={this.handleFocus}
             />
 
-            <label className={classes.form__error}>{this.state.errors.imageInput}</label>
+            <label className={styles.error}>{this.state.errors.imageInput}</label>
           </div>
 
-          <div className={classes.form__confirmation}>
+          <div className={styles.confirmation}>
             <div></div>
             <label>
               <input
@@ -265,12 +265,12 @@ class Form extends Component<FormProps, FormState> {
               I consent to my personal data
             </label>
             <br />
-            <label className={classes.form__error}>{this.state.errors.confirmationInput}</label>
+            <label className={styles.error}>{this.state.errors.confirmationInput}</label>
           </div>
 
-          <div className={classes.form__buttons}>
+          <div className={styles.buttons}>
             <button
-              className={classes.form__submit}
+              className={styles.submitButton}
               type="submit"
               disabled={this.state.buttonDisabled}
               data-testid="submit-button"
@@ -278,12 +278,12 @@ class Form extends Component<FormProps, FormState> {
               Submit
             </button>
             {!this.state.buttonDisabled && (
-              <button type="reset" className={classes.form__clear}>
+              <button type="reset" className={styles.clearButton}>
                 Clear
               </button>
             )}
             {this.state.buttonDisabled && this.state.cardSaved && (
-              <button className={classes.form__success}>Saved</button>
+              <button className={styles.successMessage}>Saved</button>
             )}
           </div>
         </form>
